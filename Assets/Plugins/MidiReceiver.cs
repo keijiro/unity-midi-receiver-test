@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
 using System.Runtime.InteropServices;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
+// MIDI message struct.
 public struct MidiMessage
 {
+    // MIDI source (endpoint) ID.
     public uint source;
+
+    // MIDI status byte.
     public byte status;
+
+    // MIDI data bytes.
     public byte data1;
     public byte data2;
 
@@ -19,7 +25,8 @@ public struct MidiMessage
     }
 }
 
-public class UnityMidiReceiver : MonoBehaviour
+// MIDI Receiver class.
+public class MidiReceiver : MonoBehaviour
 {
     [DllImport ("UnityMIDIReceiver")]
     public static extern int UnityMIDIReceiver_CountEndpoints ();
@@ -35,6 +42,14 @@ public class UnityMidiReceiver : MonoBehaviour
 
     Queue<MidiMessage> messageQueue;
 
+#if UNITY_EDITOR
+    Queue<MidiMessage> messageHistory;
+
+    public Queue<MidiMessage> History {
+        get { return messageHistory; }
+    }
+#endif
+
     public bool IsEmpty {
         get { return messageQueue.Count == 0; }
     }
@@ -44,18 +59,32 @@ public class UnityMidiReceiver : MonoBehaviour
         return messageQueue.Dequeue ();
     }
 
-    void Start ()
+    void Awake ()
     {
         messageQueue = new Queue<MidiMessage> ();
+#if UNITY_EDITOR
+        messageHistory = new Queue<MidiMessage> ();
+#endif
     }
 
     void Update ()
     {
         while (true) {
             var data = UnityMIDIReceiver_DequeueIncomingData ();
-            if (data == 0)
+            if (data == 0) {
                 break;
-            messageQueue.Enqueue (new MidiMessage (data));
+            }
+
+            var message = new MidiMessage (data);
+            messageQueue.Enqueue (message);
+#if UNITY_EDITOR
+            messageHistory.Enqueue (message);
+#endif
         }
+#if UNITY_EDITOR
+        while (messageHistory.Count > 8) {
+            messageHistory.Dequeue ();
+        }
+#endif
     }
 }

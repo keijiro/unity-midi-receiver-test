@@ -4,11 +4,11 @@ using System.Collections;
 public class MidiMessageDistributor : MonoBehaviour
 {
     public GameObject[] targets;
-    UnityMidiReceiver receiver;
+    MidiReceiver receiver;
 
     void Start ()
     {
-        receiver = FindObjectOfType (typeof(UnityMidiReceiver)) as UnityMidiReceiver;
+        receiver = FindObjectOfType (typeof(MidiReceiver)) as MidiReceiver;
     }
 
     void Update ()
