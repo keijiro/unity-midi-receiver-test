@@ -22,22 +22,16 @@ public struct MidiMessage
 public class UnityMidiReceiver : MonoBehaviour
 {
     [DllImport ("UnityMIDIReceiver")]
-    private static extern void UnityMIDIReceiver_Initialize ();
+    public static extern int UnityMIDIReceiver_CountEndpoints ();
 
     [DllImport ("UnityMIDIReceiver")]
-    private static extern string UnityMIDIReceiver_GetLogText ();
+    public static extern uint UnityMIDIReceiver_GetEndpointIDAtIndex (int index);
 
     [DllImport ("UnityMIDIReceiver")]
-    private static extern int UnityMIDIReceiver_CountEndpoints ();
+    public static extern string UnityMIDIReceiver_GetEndpointName (uint id);
 
     [DllImport ("UnityMIDIReceiver")]
-    private static extern uint UnityMIDIReceiver_GetEndpointIDAtIndex (int index);
-
-    [DllImport ("UnityMIDIReceiver")]
-    private static extern string UnityMIDIReceiver_GetEndpointName (uint id);
-
-    [DllImport ("UnityMIDIReceiver")]
-    private static extern ulong UnityMIDIReceiver_DequeueIncomingData ();
+    public static extern ulong UnityMIDIReceiver_DequeueIncomingData ();
 
     Queue<MidiMessage> messageQueue;
 
@@ -53,7 +47,6 @@ public class UnityMidiReceiver : MonoBehaviour
     void Start ()
     {
         messageQueue = new Queue<MidiMessage> ();
-        UnityMIDIReceiver_Initialize ();
     }
 
     void Update ()
