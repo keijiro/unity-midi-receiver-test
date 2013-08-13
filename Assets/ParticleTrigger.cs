@@ -7,6 +7,5 @@ public class ParticleTrigger : MonoBehaviour
     {
         particleSystem.startSize = midi.data2 / 64.0f;
         particleSystem.Emit (Mathf.Max(midi.data2 / 8, 3));
-        Debug.Log (midi.data2);
     }
 }

@@ -5,14 +5,17 @@ using System.Collections.Generic;
 
 public struct MidiMessage
 {
+    public uint source;
     public byte status;
     public byte data1;
     public byte data2;
 
-    public MidiMessage(uint data) {
-        status = (byte)(data & 0xff);
-        data1 = (byte)((data >> 8) & 0xff);
-        data2 = (byte)((data >> 16) & 0xff);
+    public MidiMessage (ulong data)
+    {
+        source = (uint)(data & 0xffffffffUL);
+        status = (byte)((data >> 32) & 0xff);
+        data1 = (byte)((data >> 40) & 0xff);
+        data2 = (byte)((data >> 48) & 0xff);
     }
 }
 
@@ -34,46 +37,30 @@ public class UnityMidiReceiver : MonoBehaviour
     private static extern string UnityMIDIReceiver_GetEndpointName (uint id);
 
     [DllImport ("UnityMIDIReceiver")]
-    private static extern uint UnityMIDIReceiver_DequeueMessageDataOnEndpoint (uint id);
-
-    List<uint> ids;
-    string text = "";
+    private static extern ulong UnityMIDIReceiver_DequeueIncomingData ();
 
     public GameObject target;
 
     void Start ()
     {
-        ids = new List<uint> ();
-
         UnityMIDIReceiver_Initialize ();
-
         var count = UnityMIDIReceiver_CountEndpoints ();
         for (var i = 0; i < count; i++) {
-            ids.Add (UnityMIDIReceiver_GetEndpointIDAtIndex (i));
-        }
-
-        foreach (var id in ids) {
+            var id = UnityMIDIReceiver_GetEndpointIDAtIndex (i);
             Debug.Log (UnityMIDIReceiver_GetEndpointName (id));
         }
     }
 
     void Update ()
     {
-        foreach (var id in ids) {
-            while (true) {
-                var data = UnityMIDIReceiver_DequeueMessageDataOnEndpoint (id);
-                if (data == 0)
-                    break;
-                var msg = new MidiMessage(data);
-                if (msg.status == 0x90) {
-                    target.SendMessage ("OnNoteOn", msg);
-                }
+        while (true) {
+            var data = UnityMIDIReceiver_DequeueIncomingData ();
+            if (data == 0)
+                break;
+            var msg = new MidiMessage (data);
+            if (msg.status == 0x90) {
+                target.SendMessage ("OnNoteOn", msg);
             }
         }
-    }
-
-    void OnGUI ()
-    {
-        GUILayout.Label (text);
     }
 }
