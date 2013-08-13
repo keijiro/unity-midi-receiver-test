@@ -39,16 +39,21 @@ public class UnityMidiReceiver : MonoBehaviour
     [DllImport ("UnityMIDIReceiver")]
     private static extern ulong UnityMIDIReceiver_DequeueIncomingData ();
 
-    public GameObject target;
+    Queue<MidiMessage> messageQueue;
+
+    public bool IsEmpty {
+        get { return messageQueue.Count == 0; }
+    }
+
+    public MidiMessage PopMessage ()
+    {
+        return messageQueue.Dequeue ();
+    }
 
     void Start ()
     {
+        messageQueue = new Queue<MidiMessage> ();
         UnityMIDIReceiver_Initialize ();
-        var count = UnityMIDIReceiver_CountEndpoints ();
-        for (var i = 0; i < count; i++) {
-            var id = UnityMIDIReceiver_GetEndpointIDAtIndex (i);
-            Debug.Log (UnityMIDIReceiver_GetEndpointName (id));
-        }
     }
 
     void Update ()
@@ -57,10 +62,7 @@ public class UnityMidiReceiver : MonoBehaviour
             var data = UnityMIDIReceiver_DequeueIncomingData ();
             if (data == 0)
                 break;
-            var msg = new MidiMessage (data);
-            if (msg.status == 0x90) {
-                target.SendMessage ("OnNoteOn", msg);
-            }
+            messageQueue.Enqueue (new MidiMessage (data));
         }
     }
 }

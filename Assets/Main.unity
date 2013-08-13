@@ -136,6 +136,58 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!1 &1132511199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1132511200}
+  - 114: {fileID: 1132511201}
+  - 114: {fileID: 1132511202}
+  m_Layer: 0
+  m_Name: MIDI Receiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1132511200
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1132511199}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1132511201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1132511199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe8894fb566a4e0a8e93d8596028974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1132511202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1132511199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97d532d1c8e9543e6880b6eff1b80e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 1632073776}
 --- !u!1 &1299736215
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +200,6 @@ GameObject:
   - 92: {fileID: 1299736218}
   - 124: {fileID: 1299736217}
   - 81: {fileID: 1299736216}
-  - 114: {fileID: 1299736221}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -216,18 +267,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!114 &1299736221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1299736215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfe8894fb566a4e0a8e93d8596028974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1632073776}
 --- !u!1 &1632073776
 GameObject:
   m_ObjectHideFlags: 0
