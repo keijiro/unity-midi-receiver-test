@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor;
 
 // MIDI Receiver class.
 public class MidiReceiver : MonoBehaviour
