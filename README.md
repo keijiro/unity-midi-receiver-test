@@ -11,8 +11,8 @@ System Requirements
 - Unity 4 Pro
 - Runs on desktop platforms (Mac OS X and Windows)
 
-How it works?
--------------
+How Does It Work?
+-----------------
 
 The main component of this plug-in is **MidiReceiver**. You have to attach this
 script to a game object, and then you can retrieve received messages with 
