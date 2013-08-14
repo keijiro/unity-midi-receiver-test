@@ -6,6 +6,11 @@ This is a sample project for [unity-midi-receiver]
 
 See a [short demo](https://vine.co/v/hMAeTub9ZEm).
 
+System Requirements
+-------------------
+- Unity 4 Pro
+- Runs on desktop platforms (Mac OS X and Windows)
+
 How it works?
 -------------
 
@@ -26,12 +31,6 @@ For the details about the plug-in, see the description on [unity-midi-receiver]
 **TIPS** - Project-independent modules are stored in **Assets/Plugins** and
 **Assets/UnityMidiReceiver**. You can easily export these directories and
 import it to your own projects.
-
-Limitations
------------
-
-unity-midi-receiver only supports OS X, and for that reason this project
-doesn’t work on Windows.
 
 License
 -------
